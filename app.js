@@ -31,7 +31,8 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.js'});
 
 let URI = process.env.MongoURL;
-let OPTION = { user: '', pass: '' };
+let OPTION = { user: '', pass: '', autoIndex: true }; 
+// here must use autoIndex for mongoose index unique value
 
 mongoose.connect(URI, OPTION)
   .then(() => {

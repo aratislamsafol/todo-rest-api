@@ -1,7 +1,8 @@
 // Import Basic
 const express = require('express');
+const ProfileController = require('../controller/ProfileController');
 const router = express.Router();
 
-// router.get('/', );
+router.post('/CreateProfile', ProfileController.CreateProfile);
 
 module.exports = router;
