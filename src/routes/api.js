@@ -14,5 +14,5 @@ router.post('/CreateToDo', AuthVerifyMiddleware, ToDoListController.CreateToDo);
 router.get('/SelectToDo', AuthVerifyMiddleware, ToDoListController.SelectToDo);
 router.post('/UpdateToDo', AuthVerifyMiddleware, ToDoListController.UpdateToDo);
 router.post('/UpdateStatusToDo', AuthVerifyMiddleware, ToDoListController.UpdateStatusToDo);
-
+router.get('/RemoveToDo', AuthVerifyMiddleware, ToDoListController.RemoveToDo);
 module.exports = router;

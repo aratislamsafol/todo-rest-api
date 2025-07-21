@@ -79,3 +79,13 @@ exports.UpdateStatusToDo = async(req, res) => {
         res.status(500).json({ status: "Failed to Update Data", message: err.message});
     }
 }
+
+exports.RemoveToDo = async(req, res) => {
+    try{
+        const _id = req.body['_id'];
+        const data = await ToDoListModel.deleteOne({_id: _id});
+        res.status(200).json({status: "Successfully Remove ToDo", data: data})
+    } catch(err) {
+        res.status(500).json({ status: "Failed to Remove Data", message: err.message});
+    }
+}
