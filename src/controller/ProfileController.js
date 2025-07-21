@@ -6,7 +6,6 @@ dotenv.config({path: '../../config.js'});
 exports.CreateProfile = async( req, res ) => {
     try {
         const reqBody = req.body;
-        console.log(reqBody);
         const data = await ProfileModel.create( reqBody);
         res.status(201).json({ status: "Success", data: data });
     }
@@ -74,6 +73,29 @@ exports.SelectProfile = async( req, res ) => {
     }
 }
 
-// update profile
+// Update profile
+exports.UpdateProfile = async (req, res) => {
+  try {
+    const userName = req.user.UserName; 
+    const reqBody = req.body;
+
+    const result = await ProfileModel.updateOne(
+      { UserName: userName }, 
+      { $set: reqBody }       
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ status: "fail", message: "No profile updated. User not found or data is same." });
+    }
+
+    res.status(200).json({
+      status: "success",
+      message: "Profile updated successfully!",
+      updatedData: reqBody
+    });
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.message });
+  }
+};
 
 
