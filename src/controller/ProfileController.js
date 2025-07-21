@@ -61,3 +61,19 @@ exports.UserLogin = async (req, res) => {
     });
   }
 };
+
+// SelectProfile
+exports.SelectProfile = async( req, res ) => {
+    try {
+        let UserName = req.user.UserName;
+        const data = await ProfileModel.find({UserName: UserName});
+        res.status(201).json({ status: "Success", data: data });
+    }
+    catch(err) {
+        res.status(500).json({ status: "Failed", message: err.message});
+    }
+}
+
+// update profile
+
+
