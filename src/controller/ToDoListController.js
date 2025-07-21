@@ -27,7 +27,6 @@ exports.CreateToDo = async( req, res ) => {
         res.status(500).json({ status: "Failed", message: err.message});
     }
 }
-
 exports.SelectToDo = async(req, res) => {
     try {
         let UserName = req.user.UserName;
@@ -51,6 +50,25 @@ exports.UpdateToDo = async(req, res) => {
         const PostBody = {
             TodoSubject: TodoSubject,
             TodoDescription: TodoDescription,
+            TodoUpdateDate: TodoUpdateDate
+        }
+
+        const data = await ToDoListModel.updateOne({_id:_id}, {$set: PostBody}, {upsert: true});
+        res.status(200).json({status: "Successfully Update ToDo", data: data})
+    }
+    catch(err) {
+        res.status(500).json({ status: "Failed to Update Data", message: err.message});
+    }
+}
+// UpdateStatus ToDo
+exports.UpdateStatusToDo = async(req, res) => {
+    try{
+        const reqBody = req.body;
+        let _id = reqBody['_id']; 
+        let TodoStatus = reqBody['TodoStatus'];
+        let TodoUpdateDate = Date.now();
+        const PostBody = {
+            TodoStatus: TodoStatus,
             TodoUpdateDate: TodoUpdateDate
         }
 
