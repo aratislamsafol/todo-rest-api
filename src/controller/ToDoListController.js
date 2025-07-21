@@ -89,3 +89,30 @@ exports.RemoveToDo = async(req, res) => {
         res.status(500).json({ status: "Failed to Remove Data", message: err.message});
     }
 }
+// SelectToDoByStatus
+exports.SelectToDoByStatus = async(req, res) => {
+    try {
+        let UserName = req.user.UserName;
+        const TodoStatus = req.body['TodoStatus'];
+        const data = await ToDoListModel.find({UserName: UserName, TodoStatus:TodoStatus});
+        res.status(200).json({status: "Successfully Select ToDo by Status", data: data})
+    }
+    catch(err) {
+        res.status(400).json({ status: "Failed to Select Data", message: err.message});
+    }
+}
+exports.SelectToDoByDate = async(req, res) => {
+    try {
+        let UserName = req.user.UserName;
+        const FromDate = req.body['FormDate'];
+        const ToDate = req.body['ToDate'];
+        const data = await ToDoListModel.find({UserName: UserName, 
+            TodoCreateDate: {
+                $gte: new Date(FromDate).getTime().toString(),
+                $lte: new Date(ToDate).getTime().toString()}});
+        res.status(200).json({status: "Successfully Select ToDo by Date", data: data})
+    }
+    catch(err) {
+        res.status(400).json({ status: "Failed to Select Data for Date", message: err.message});
+    }
+}
